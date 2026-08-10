@@ -568,6 +568,25 @@
     }
     .det-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(58,45,30,0.08); }
     .det-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; border: 1px solid rgba(184,147,90,0.25); }
+    /* Custom 26 SEP Calendar Icon */
+    .cal-badge {
+      width: 58px; height: 60px; border-radius: 12px;
+      background: var(--cream); border: 1.5px solid var(--gold);
+      display: flex; flex-direction: column; align-items: center; overflow: hidden;
+      margin-bottom: 16px; box-shadow: 0 4px 14px rgba(184,147,90,0.18);
+    }
+    .cal-hdr {
+      width: 100%; background: var(--gold-d); color: var(--cream);
+      font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; padding: 3px 0; text-align: center;
+    }
+    body.rtl .cal-hdr { font-family: 'Aref Ruqaa', sans-serif; font-size: 11px; letter-spacing: 0; padding: 2px 0; }
+    .cal-body {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700;
+      color: var(--dark); line-height: 1; width: 100%; background: var(--cream);
+    }
+    body.rtl .cal-body { font-family: 'Amiri', serif; font-size: 22px; }
     .det-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--dark); margin-bottom: 10px; }
     body.rtl .det-card h3 { font-family: 'Amiri', serif; font-weight: 700; }
     .det-card p { font-size: 16px; color: #5c4735; line-height: 1.75; }
@@ -816,7 +835,10 @@
     <div class="gold-div"><div class="gold-div-line"></div><span class="gold-div-gem">✦</span><div class="gold-div-line"></div></div>
     <div class="det-grid">
       <div class="det-card">
-        <div class="det-icon">📅</div>
+        <div class="cal-badge">
+          <div class="cal-hdr" data-i18n="iconMonth">SEP</div>
+          <div class="cal-body">26</div>
+        </div>
         <h3 data-i18n="dateCardTitle">Date &amp; Time</h3>
         <p data-i18n="dateCardBody">Saturday, 26 September 2026<br>Doors open at 6:00 PM<br>Celebration begins at 7:00 PM</p>
       </div>
@@ -857,7 +879,7 @@
       cdLabel:'To the big day', cdTitle:'Countdown',
       cdDays:'Days', cdHours:'Hours', cdMins:'Minutes', cdSecs:'Seconds',
       detLabel:'Everything you need to know', detTitle:'Day Details',
-      dateCardTitle:'Date & Time',
+      dateCardTitle:'Date & Time', iconMonth:'SEP',
       dateCardBody:'Saturday, 26 September 2026<br>Doors open at 6:00 PM<br>Celebration begins at 7:00 PM',
       venueCardTitle:'Venue',
       venueCardBody:'Montaza Palace<br>El-Gaish Rd, Al Mandarah Bahri, Montaza 2<br>Alexandria Governorate 21539, Egypt',
@@ -874,7 +896,7 @@
       cdLabel:'حتى يوم الفرح', cdTitle:'العد التنازلي',
       cdDays:'أيام', cdHours:'ساعات', cdMins:'دقائق', cdSecs:'ثواني',
       detLabel:'كل ما تحتاج معرفته', detTitle:'تفاصيل اليوم',
-      dateCardTitle:'التاريخ والوقت',
+      dateCardTitle:'التاريخ والوقت', iconMonth:'سبتمبر',
       dateCardBody:'السبت، ٢٦ سبتمبر ٢٠٢٦<br>الأبواب تفتح الساعة ٦:٠٠ مساءً<br>الاحتفال يبدأ الساعة ٧:٠٠ مساءً',
       venueCardTitle:'المكان',
       venueCardBody:'قصر المنتزه<br>طريق الجيش، المندرة بحري، المنتزه ٢<br>محافظة الإسكندرية ٢١٥٣٩، مصر',
