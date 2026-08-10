@@ -7,8 +7,16 @@
   <meta name="description" content="You are cordially invited to the wedding of Raghad and Mohamed on September 26, 2026 at Helnan Palace Montaza."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500&family=Lato:wght@300;400&family=Lavishly+Yours&family=Aref+Ruqaa:wght@400;700&family=Amiri:ital,wght@0,400;0,700&display=swap" rel="stylesheet"/>
   <style>
+    @font-face {
+      font-family: 'Arslan Wessam B';
+      src: local('Arslan Wessam B'), local('arslan_wessam_b'), local('ArslanWessam-Bold'),
+           url('https://cdn.jsdelivr.net/gh/arabic-fonts/arslan-wessam@main/fonts/ttf/arslan-wessam-b.ttf') format('truetype'),
+           url('https://fonts.cdnfonts.com/s/72223/arslan_wessam_b.woff') format('woff');
+      font-weight: bold;
+      font-style: normal;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --cream:   #f7f2ea;
@@ -391,18 +399,35 @@
     .hero {
       min-height: 100svh;
       background:
-        linear-gradient(180deg, rgba(30,20,10,0.45) 0%, rgba(10,8,4,0.68) 100%),
-        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1200&q=85') center/cover no-repeat;
+        linear-gradient(180deg, rgba(20,15,10,0.45) 0%, rgba(10,8,4,0.72) 100%),
+        url('helnan-palace.jpg') center/cover no-repeat;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center; padding: 80px 24px 60px; position: relative;
     }
-    .hero-badge { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold-l); margin-bottom: 18px; animation: fadeInDown 1s ease 0.2s both; }
-    .hero-names { font-family: 'Cormorant Garamond', serif; display: flex; flex-direction: column; align-items: center; animation: fadeInDown 1s ease 0.4s both; }
-    .hero-names .name { font-size: clamp(58px, 14vw, 90px); font-weight: 400; color: white; line-height: 1.05; }
-    .hero-and { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-style: italic; font-weight: 300; color: var(--gold-l); margin: 4px 0; }
-    .hero-date-lbl { font-family: 'Cinzel', serif; font-size: 13px; color: rgba(255,255,255,0.75); letter-spacing: 3px; margin-top: 18px; animation: fadeInDown 1s ease 0.6s both; }
+    .hero-badge { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold-l); margin-bottom: 18px; text-shadow: 0 2px 8px rgba(0,0,0,0.6); animation: fadeInDown 1s ease 0.2s both; }
+    .hero-names { display: flex; flex-direction: column; align-items: center; animation: fadeInDown 1s ease 0.4s both; }
+    .hero-names .name {
+      font-family: 'Lavishly Yours', cursive, serif;
+      font-size: clamp(64px, 16vw, 105px);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.1;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.7), 0 2px 6px rgba(0,0,0,0.9);
+      letter-spacing: 1px;
+    }
+    body.rtl .hero-names .name {
+      font-family: 'Arslan Wessam B', 'arslan_wessam_b', 'Aref Ruqaa', 'Amiri', serif;
+      font-weight: 700;
+      font-size: clamp(54px, 14vw, 88px);
+      line-height: 1.3;
+    }
+    .hero-and { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-style: italic; font-weight: 300; color: var(--gold-l); margin: 4px 0; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
+    body.rtl .hero-and { font-family: 'Arslan Wessam B', 'arslan_wessam_b', 'Aref Ruqaa', serif; font-style: normal; font-size: 24px; }
+    .hero-date-lbl { font-family: 'Cinzel', serif; font-size: 13px; color: rgba(255,255,255,0.9); letter-spacing: 3px; margin-top: 18px; text-shadow: 0 2px 8px rgba(0,0,0,0.7); animation: fadeInDown 1s ease 0.6s both; }
+    body.rtl .hero-date-lbl { font-family: 'Aref Ruqaa', 'Lato', sans-serif; letter-spacing: 1px; }
     .hero-cta { position: absolute; bottom: 28px; display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; animation: fadeInDown 1s ease 1s both; }
-    .hero-cta span { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .hero-cta span { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.85); text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
+    body.rtl .hero-cta span { font-family: 'Aref Ruqaa', sans-serif; letter-spacing: 1px; }
     .cta-line { width: 1px; height: 36px; background: rgba(255,255,255,0.25); overflow: hidden; position: relative; }
     .cta-line::after { content:''; position:absolute; top:-100%; width:1px; height:100%; background:var(--gold-l); animation:slideLine 1.6s ease infinite; }
     @keyframes slideLine { to{ top:200% } }
@@ -628,9 +653,9 @@
   <section class="hero">
     <p class="hero-badge" data-i18n="wereMarrying">We're Getting Married</p>
     <div class="hero-names">
-      <span class="name">Raghad</span>
-      <span class="hero-and">and</span>
-      <span class="name">Mohamed</span>
+      <span class="name" data-i18n="name1">Raghad</span>
+      <span class="hero-and" data-i18n="and">and</span>
+      <span class="name" data-i18n="name2">Mohamed</span>
     </div>
     <p class="hero-date-lbl" data-i18n="heroDate">26 September 2026 · Helnan Palace Montaza</p>
     <div class="hero-cta" onclick="scrollTo('s-cd')">
@@ -744,7 +769,7 @@
   <!-- FOOTER -->
   <footer>
     <p class="f-mono">R &nbsp;|&nbsp; M</p>
-    <p class="f-names">Raghad &amp; Mohamed</p>
+    <p class="f-names" data-i18n="coupleNames">Raghad &amp; Mohamed</p>
     <p class="f-date">26 SEPTEMBER 2026 · HELNAN PALACE MONTAZA</p>
     <p class="f-love" data-i18n="footerLove">With all our love</p>
     <p class="f-gem">✦</p>
@@ -757,6 +782,7 @@
     en: {
       dear:'Dear', guest:'Guest', invited:"You're invited ✦", tapOpen:'tap to open',
       wereMarrying:"We're Getting Married",
+      name1:'Raghad', and:'and', name2:'Mohamed', coupleNames:'Raghad & Mohamed',
       heroDate:'26 September 2026 · Helnan Palace Montaza',
       confirmCta:'Confirm your attendance',
       cdLabel:'To the big day', cdTitle:'Countdown',
@@ -782,6 +808,7 @@
     ar: {
       dear:'عزيزي', guest:'ضيفنا', invited:'أنت مدعو ✦', tapOpen:'اضغط للفتح',
       wereMarrying:'نعلن زواجنا',
+      name1:'رغد', and:'و', name2:'محمد', coupleNames:'رغد و محمد',
       heroDate:'٢٦ سبتمبر ٢٠٢٦ · قصر هلنان مونتازا',
       confirmCta:'تأكيد حضورك',
       cdLabel:'حتى يوم الفرح', cdTitle:'العد التنازلي',
