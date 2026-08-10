@@ -189,20 +189,25 @@
     }
     .env-seal-svg { width: 100%; height: 100%; }
 
-    /* Tap hint — lifted up slightly under wax seal */
+    /* Tap hint — dead-centered in the middle of the envelope/page */
     .env-hint {
       position: absolute;
-      top: calc(50% + 40px); left: 50%; transform: translateX(-50%);
+      top: calc(50% + 42px);
+      left: 0; right: 0;
+      width: 100%;
+      text-align: center;
+      margin: 0 auto;
       font-family: 'Cinzel', serif;
-      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-      color: rgba(90,65,35,0.72); font-weight: 600; white-space: nowrap;
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(90,65,35,0.75); font-weight: 600; white-space: nowrap;
       animation: envPulse 2.2s ease infinite, envFadeIn 1s ease 1.2s both;
       pointer-events: none; z-index: 25;
       transition: opacity 0.3s ease;
     }
     body.rtl .env-hint {
       font-family: 'Aref Ruqaa', sans-serif;
-      font-size: 12px; letter-spacing: 1px;
+      font-size: 13px; letter-spacing: 1px;
+      text-align: center;
     }
     .env-outer.open .env-hint { opacity: 0; }
 
@@ -528,11 +533,11 @@
 
     /* DETAILS */
     .s-det { background: var(--cream); }
-    .det-grid { display: grid; gap: 24px; max-width: 600px; margin: 0 auto; }
+    .det-grid { display: grid; gap: 28px; max-width: 620px; margin: 0 auto; }
     .det-card {
-      background: var(--parchm); border-radius: 14px; padding: 30px 26px;
+      background: var(--parchm); border-radius: 16px; padding: 34px 28px;
       display: flex; flex-direction: column; align-items: center; text-align: center;
-      border: 1px solid rgba(184,147,90,0.2);
+      border: 1px solid rgba(184,147,90,0.22);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .det-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(58,45,30,0.08); }
@@ -542,7 +547,7 @@
     .det-card p { font-size: 16px; color: #5c4735; line-height: 1.75; }
     body.rtl .det-card p { font-family: 'Amiri', serif; font-size: 17px; }
     .act-btn {
-      margin-top: 16px; padding: 12px 26px;
+      margin-top: 18px; padding: 13px 28px;
       background: var(--gold-d); color: var(--cream); border: none; border-radius: 100px;
       font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px;
       cursor: pointer; text-decoration: none; display: inline-block;
@@ -552,7 +557,7 @@
     .act-btn:hover { background: var(--gold); }
     .act-btn + .act-btn { margin-left: 8px; }
     body.rtl .act-btn + .act-btn { margin-left: 0; margin-right: 8px; }
-    .map-frame { width: 100%; height: 220px; border-radius: 10px; border: none; margin-bottom: 16px; }
+    .map-frame { width: 100%; height: 235px; border-radius: 14px; border: 1px solid rgba(184,147,90,0.25); margin: 20px 0 18px; box-shadow: 0 4px 16px rgba(58,45,30,0.06); }
 
     /* RSVP */
     .s-rsvp { background: var(--parchm); }
@@ -792,13 +797,13 @@
       <div class="det-card">
         <div class="det-icon">📍</div>
         <h3 data-i18n="venueCardTitle">Venue</h3>
-        <p data-i18n="venueCardBody">Helnan Palestine Palace Hotel<br>Montaza, Alexandria, Egypt</p>
+        <p data-i18n="venueCardBody">Montaza Palace, El-Gaish Rd<br>Al Mandarah Bahri, Montaza 2<br>Alexandria Governorate 21539, Egypt</p>
         <iframe class="map-frame"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3411.8!2d30.022!3d31.281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f5c5b4e58e0001%3A0x1!2sHelnan+Palestine+Hotel%2C+Montazah%2C+Alexandria%2C+Egypt!5e0!3m2!1sen!2s!4v1699999999999"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3411.8!2d30.022!3d31.281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f5c5b4e58e0001%3A0x1!2sMontaza+Palace%2C+El-Gaish+Rd%2C+Al+Mandarah+Bahri%2C+Montaza+2%2C+Alexandria+Governorate+21539%2C+Egypt!5e0!3m2!1sen!2s!4v1699999999999"
           allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         <div>
-          <a href="https://maps.google.com/?q=Helnan+Palestine+Hotel+Montaza+Alexandria+Egypt" target="_blank" class="act-btn" data-i18n="openMaps">Open in Maps</a>
-          <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ASUMMARY:Raghad%20%26%20Mohamed%20Wedding%0ADTSTART:20260926T160000Z%0ADTEND:20260926T230000Z%0ALOCATION:Helnan%20Palace%20Montaza%2C%20Alexandria%2C%20Egypt%0AEND:VEVENT%0AEND:VCALENDAR" download="Raghad_Mohamed_Wedding.ics" class="act-btn" data-i18n="addCal">Add to Calendar</a>
+          <a href="https://maps.google.com/?q=Montaza+Palace+El-Gaish+Rd+Al+Mandarah+Bahri+Montaza+2+Alexandria+Governorate+21539+Egypt" target="_blank" class="act-btn" data-i18n="openMaps">Open in Maps</a>
+          <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ASUMMARY:Raghad%20%26%20Mohamed%20Wedding%0ADTSTART:20260926T160000Z%0ADTEND:20260926T230000Z%0ALOCATION:Montaza%20Palace%2C%20El-Gaish%20Rd%2C%20Al%20Mandarah%20Bahri%2C%20Montaza%202%2C%20Alexandria%20Governorate%2021539%2C%20Egypt%0AEND:VEVENT%0AEND:VCALENDAR" download="Raghad_Mohamed_Wedding.ics" class="act-btn" data-i18n="addCal">Add to Calendar</a>
         </div>
       </div>
     </div>
@@ -829,7 +834,7 @@
       dateCardTitle:'Date & Time',
       dateCardBody:'Saturday, 26 September 2026<br>Doors open at 6:00 PM<br>Celebration begins at 7:00 PM',
       venueCardTitle:'Venue',
-      venueCardBody:'Helnan Palestine Palace Hotel<br>Montaza, Alexandria, Egypt',
+      venueCardBody:'Montaza Palace<br>El-Gaish Rd, Al Mandarah Bahri, Montaza 2<br>Alexandria Governorate 21539, Egypt',
       openMaps:'Open in Maps', addCal:'Add to Calendar',
       footerDate:'26 SEPTEMBER 2026 · HELNAN PALACE MONTAZA',
       footerLove:'With all our love'
@@ -846,7 +851,7 @@
       dateCardTitle:'التاريخ والوقت',
       dateCardBody:'السبت، ٢٦ سبتمبر ٢٠٢٦<br>الأبواب تفتح الساعة ٦:٠٠ مساءً<br>الاحتفال يبدأ الساعة ٧:٠٠ مساءً',
       venueCardTitle:'المكان',
-      venueCardBody:'فندق هلنان بالاس<br>مونتازا، الإسكندرية، مصر',
+      venueCardBody:'قصر المنتزه<br>طريق الجيش، المندرة بحري، المنتزه ٢<br>محافظة الإسكندرية ٢١٥٣٩، مصر',
       openMaps:'افتح في الخرائط', addCal:'أضف للتقويم',
       footerDate:'٢٦ سبتمبر ٢٠٢٦ · قصر هلنان مونتازا',
       footerLove:'بكل محبتنا'
