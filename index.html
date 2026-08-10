@@ -437,8 +437,49 @@
     .sec-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); display: block; text-align: center; margin-bottom: 6px; }
     .sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px,7vw,48px); font-weight: 400; text-align: center; color: var(--dark); }
     .gold-div { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 12px auto 44px; max-width: 180px; }
-    .gold-div-line { flex:1; height:1px; background:var(--gold); opacity:0.4; }
-    .gold-div-gem  { color: var(--gold); font-size: 12px; }
+    /* QURAN & BLESSING SECTION */
+    .s-blessing {
+      background: var(--cream);
+      padding: 56px 24px;
+      text-align: center;
+      border-bottom: 1px solid rgba(184,147,90,0.25);
+    }
+    .blessing-container {
+      max-width: 680px;
+      margin: 0 auto;
+      direction: rtl;
+    }
+    .bismillah {
+      font-family: 'Amiri', 'Aref Ruqaa', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gold-d);
+      margin-bottom: 6px;
+    }
+    .quran-ayah {
+      font-family: 'Amiri', 'Aref Ruqaa', serif;
+      font-size: clamp(20px, 5vw, 27px);
+      font-weight: 700;
+      line-height: 1.85;
+      color: var(--dark);
+      margin: 18px 0;
+      padding: 0 10px;
+    }
+    .blessing-text {
+      font-family: 'Amiri', 'Aref Ruqaa', serif;
+      font-size: clamp(17px, 4.2vw, 22px);
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .dua-text {
+      font-family: 'Amiri', 'Aref Ruqaa', serif;
+      font-size: clamp(19px, 4.8vw, 24px);
+      font-weight: 700;
+      color: var(--gold-d);
+      line-height: 1.7;
+    }
 
     /* COUNTDOWN */
     .s-cd { background: var(--parchm); }
@@ -664,6 +705,23 @@
     </div>
   </section>
 
+  <!-- QURAN & BLESSING (UNTRANSLATABLE) -->
+  <section class="s-blessing">
+    <div class="blessing-container">
+      <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      <div class="gold-div"><div class="gold-div-line"></div><span class="gold-div-gem">✦</span><div class="gold-div-line"></div></div>
+      <blockquote class="quran-ayah">
+        «وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً»
+      </blockquote>
+      <p class="blessing-text">
+        وبحضوركم واكتملت فرحتنا، نسأل الله أن يبارك لهما ويجمع بينهما في خير.
+      </p>
+      <p class="dua-text">
+        «بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ»
+      </p>
+    </div>
+  </section>
+
   <!-- COUNTDOWN -->
   <section class="s-cd" id="s-cd">
     <span class="sec-label" data-i18n="cdLabel">To the big day</span>
@@ -679,25 +737,32 @@
 
   <!-- DETAILS -->
   <section class="s-det">
-    <span class="sec-label">Everything you need to know</span>
-    <h2 class="sec-title">Day Details</h2>
+    <span class="sec-label" data-i18n="detLabel">Everything you need to know</span>
+    <h2 class="sec-title" data-i18n="detTitle">Day Details</h2>
     <div class="gold-div"><div class="gold-div-line"></div><span class="gold-div-gem">✦</span><div class="gold-div-line"></div></div>
     <div class="det-grid">
       <div class="det-card">
         <div class="det-icon">📅</div>
-        <h3>Date &amp; Time</h3>
-        <p>Saturday, 26 September 2026<br>Doors open at 6:00 PM<br>Celebration begins at 7:00 PM</p>
+        <h3 data-i18n="dateCardTitle">Date &amp; Time</h3>
+        <p data-i18n="dateCardBody">Saturday, 26 September 2026<br>Doors open at 6:00 PM<br>Celebration begins at 7:00 PM</p>
       </div>
       <div class="det-card">
         <div class="det-icon">📍</div>
-        <h3>Venue</h3>
-        <p>Helnan Palestine Palace Hotel<br>Montaza, Alexandria, Egypt</p>
+        <h3 data-i18n="venueCardTitle">Venue</h3>
+        <p data-i18n="venueCardBody">Helnan Palestine Palace Hotel<br>Montaza, Alexandria, Egypt</p>
         <iframe class="map-frame"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3411.8!2d30.022!3d31.281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f5c5b4e58e0001%3A0x1!2sHelnan+Palestine+Hotel%2C+Montazah%2C+Alexandria%2C+Egypt!5e0!3m2!1sen!2s!4v1699999999999"
           allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         <div>
-          <a href="https://maps.google.com/?q=Helnan+Palestine+Hotel+Montaza+Alexandria+Egypt" target="_blank" class="act-btn">Open in Maps</a>
-          <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AV  <section class="s-rsvp" id="s-rsvp">
+          <a href="https://maps.google.com/?q=Helnan+Palestine+Hotel+Montaza+Alexandria+Egypt" target="_blank" class="act-btn" data-i18n="openMaps">Open in Maps</a>
+          <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ASUMMARY:Raghad%20%26%20Mohamed%20Wedding%0ADTSTART:20260926T160000Z%0ADTEND:20260926T230000Z%0ALOCATION:Helnan%20Palace%20Montaza%2C%20Alexandria%2C%20Egypt%0AEND:VEVENT%0AEND:VCALENDAR" download="Raghad_Mohamed_Wedding.ics" class="act-btn" data-i18n="addCal">Add to Calendar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="s-rsvp" id="s-rsvp">
     <span class="sec-label" data-i18n="rsvpLabel">We hope to count on you</span>
     <h2 class="sec-title" data-i18n="rsvpTitle">Confirm Your Attendance</h2>
     <div class="gold-div"><div class="gold-div-line"></div><span class="gold-div-gem">✦</span><div class="gold-div-line"></div></div>
@@ -733,35 +798,6 @@
         <div class="success-emoji">💌</div>
         <h3 data-i18n="successTitle">Thank You!</h3>
         <p data-i18n="successBody">Your confirmation has been received.<br>We can't wait to celebrate with you at Helnan Palace!</p>
-      </div>
-    </div>
-  </section>   <button type="submit" class="sub-btn" id="sub-btn">Send Confirmation</button>
-      </form>
-      <div class="success-msg" id="success-msg">
-        <div class="success-emoji">💌</div>
-        <h3>Thank You!</h3>
-        <p>Your confirmation has been received.<br>We can't wait to celebrate with you at Helnan Palace!</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- GUEST WALL -->
-  <section class="s-wall">
-    <span class="sec-label" data-i18n="wallLabel">With love from our guests</span>
-    <h2 class="sec-title" data-i18n="wallTitle">Congratulations</h2>
-    <div class="gold-div"><div class="gold-div-line"></div><span class="gold-div-gem">✦</span><div class="gold-div-line"></div></div>
-    <div class="msgs" id="msgs">
-      <div class="msg-card">
-        <div class="msg-hdr"><span class="msg-name">Ali</span><span class="msg-date">Aug 10, 2026</span></div>
-        <p class="msg-body">"Can't wait for the big day! &#128154;&#128154;"</p>
-      </div>
-      <div class="msg-card">
-        <div class="msg-hdr"><span class="msg-name">Farida</span><span class="msg-date">Aug 10, 2026</span></div>
-        <p class="msg-body">"&#x623;&#x644;&#x641; &#x645;&#x628;&#x631;&#x648;&#x648;&#x648;&#x643; &#127881; وربنا يتمم بالخير"</p>
-      </div>
-      <div class="msg-card">
-        <div class="msg-hdr"><span class="msg-name">Mohamed K.</span><span class="msg-date">Aug 10, 2026</span></div>
-        <p class="msg-body">"Congratulations Raghad & Mohamed! Wishing you a lifetime of love &#129293;"</p>
       </div>
     </div>
   </section>
@@ -973,6 +1009,7 @@
 
   function addCard(name, msg, date) {
     const list = document.getElementById('msgs');
+    if (!list) return;
     const card = document.createElement('div');
     card.className = 'msg-card';
     card.innerHTML =
