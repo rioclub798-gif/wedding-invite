@@ -148,31 +148,78 @@
       color: #4a3a28; opacity: 0.6;
     }
 
-    /* Wax seal */
+    /* Wax seal — centered on envelope body */
     .env-seal {
       position: absolute;
-      bottom: -1px; left: 50%;
-      transform: translateX(-50%) translateY(50%);
-      width: min(80px, 22vw); height: min(80px, 22vw);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(90px, 24vw); height: min(90px, 24vw);
       z-index: 20;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
     .env-outer.open .env-seal {
       opacity: 0;
-      transform: translateX(-50%) translateY(50%) scale(0.7);
+      transform: translate(-50%, -50%) scale(0.6);
     }
     .env-seal-svg { width: 100%; height: 100%; }
 
-    /* Tap hint */
+    /* Tap hint — on the envelope itself */
     .env-hint {
+      position: absolute;
+      bottom: 12px; left: 50%; transform: translateX(-50%);
       font-family: 'Cinzel', serif;
-      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(90,65,35,0.55); white-space: nowrap;
       animation: envPulse 2.2s ease infinite, envFadeIn 1s ease 1.2s both;
+      pointer-events: none;
     }
+    .env-outer.open .env-hint { opacity: 0; }
+
+    /* Language toggle */
+    #lang-toggle {
+      position: fixed; top: 18px; right: 18px; z-index: 2000;
+      display: flex; align-items: center; gap: 0;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      animation: envFadeIn 1s ease 1.5s both;
+    }
+    .lang-btn {
+      padding: 7px 14px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px; letter-spacing: 1px;
+      color: rgba(255,255,255,0.5);
+      background: none; border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .lang-btn.active {
+      background: rgba(184,147,90,0.8);
+      color: white;
+    }
+    body:not(#invite-screen) #lang-toggle {
+      border-color: rgba(184,147,90,0.3);
+      background: rgba(247,242,234,0.9);
+    }
+    #lang-toggle.on-main {
+      background: rgba(247,242,234,0.95);
+      border-color: rgba(184,147,90,0.35);
+      box-shadow: 0 4px 16px rgba(58,45,30,0.1);
+    }
+    #lang-toggle.on-main .lang-btn { color: var(--text); }
+    #lang-toggle.on-main .lang-btn.active { background: var(--gold-d); color: var(--cream); }
+
+    /* RTL support */
+    body.rtl { direction: rtl; text-align: right; }
+    body.rtl .sig-clr { right: auto; left: 10px; }
+    body.rtl .msg-hdr { flex-direction: row-reverse; }
+    body.rtl .hero-names { direction: ltr; }
 
     @keyframes envFadeIn  { from{ opacity:0; transform:translateY(10px) } to{ opacity:1; transform:translateY(0) } }
-    @keyframes envPulse   { 0%,100%{ opacity:0.2 } 50%{ opacity:0.6 } }
+    @keyframes envPulse   { 0%,100%{ opacity:0.2 } 50%{ opacity:0.7 } }
     @keyframes fadeInDown { from{ opacity:0; transform:translateY(-14px) } to{ opacity:1; transform:translateY(0) } }
     @keyframes fadeInUp   { from{ opacity:0; transform:translateY(20px)  } to{ opacity:1; transform:translateY(0) } }
 
@@ -484,18 +531,24 @@
 
 <div id="petals-container"></div>
 
+<!-- Language Toggle (fixed, always visible) -->
+<div id="lang-toggle">
+  <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btn-ar" onclick="setLang('ar')">ع</button>
+</div>
+
 <!-- ══ ENVELOPE INTRO ══ -->
 <div id="invite-screen">
 
   <div class="env-dear">
-    <small>Dear</small>
-    <strong>Guest</strong>
+    <small data-i18n="dear">Dear</small>
+    <strong data-i18n="guest">Guest</strong>
   </div>
 
   <div class="env-outer" id="env-outer" onclick="openEnvelope()">
 
     <!-- Letter (hidden, rises on open) -->
-    <div class="env-letter"><span>You're invited ✦</span></div>
+    <div class="env-letter"><span data-i18n="invited">You're invited ✦</span></div>
 
     <!-- Envelope body -->
     <div class="env-body">
@@ -517,16 +570,13 @@
             <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(0,0,0,0.18)"/>
           </filter>
         </defs>
-        <!-- Triangle: left=0,0  apex=170,152  right=340,0 -->
         <polygon points="0,0 340,0 170,158" fill="url(#flapGrad)" filter="url(#flapShadow)"/>
-        <!-- Subtle crease line down the center of the flap -->
         <line x1="170" y1="0" x2="170" y2="158" stroke="rgba(160,130,90,0.1)" stroke-width="1"/>
-        <!-- Left highlight -->
         <polygon points="0,0 170,158 170,0" fill="rgba(255,255,255,0.05)"/>
       </svg>
     </div>
 
-    <!-- Wax Seal (centered on flap join) -->
+    <!-- Wax Seal — centered on envelope -->
     <div class="env-seal">
       <svg class="env-seal-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -541,36 +591,33 @@
             <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
           </radialGradient>
           <filter id="sealBlur">
-            <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="rgba(100,0,30,0.4)"/>
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(100,0,30,0.45)"/>
           </filter>
         </defs>
-        <!-- Seal base circle -->
         <circle cx="50" cy="50" r="46" fill="url(#sealGrad)" filter="url(#sealBlur)"/>
-        <!-- Ridged border rings -->
-        <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
         <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)"  stroke-width="1"/>
-        <circle cx="50" cy="50" r="37" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" stroke-dasharray="3,2"/>
-        <!-- Highlight shimmer -->
+        <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="0.8" stroke-dasharray="3,2"/>
         <circle cx="50" cy="50" r="46" fill="url(#sealHighlight)"/>
-        <!-- R M monogram in script style -->
         <text x="50" y="44" text-anchor="middle"
           font-family="Cormorant Garamond, Georgia, serif"
-          font-size="14" font-style="italic" font-weight="400"
-          fill="rgba(255,255,255,0.9)" letter-spacing="1">R</text>
-        <text x="50" y="57" text-anchor="middle"
+          font-size="16" font-style="italic" font-weight="400"
+          fill="rgba(255,255,255,0.92)" letter-spacing="1">R</text>
+        <text x="50" y="58" text-anchor="middle"
           font-family="Cormorant Garamond, Georgia, serif"
           font-size="9" font-style="italic" font-weight="300"
-          fill="rgba(255,255,255,0.65)">&amp;</text>
-        <text x="50" y="70" text-anchor="middle"
+          fill="rgba(255,255,255,0.6)">&amp;</text>
+        <text x="50" y="72" text-anchor="middle"
           font-family="Cormorant Garamond, Georgia, serif"
-          font-size="14" font-style="italic" font-weight="400"
-          fill="rgba(255,255,255,0.9)" letter-spacing="1">M</text>
+          font-size="16" font-style="italic" font-weight="400"
+          fill="rgba(255,255,255,0.92)" letter-spacing="1">M</text>
       </svg>
     </div>
 
-  </div>
+    <!-- Tap hint — ON the envelope, at the bottom -->
+    <p class="env-hint" data-i18n="tapOpen">tap to open</p>
 
-  <p class="env-hint">tap to open</p>
+  </div>
 
 </div>
 
@@ -579,29 +626,29 @@
 
   <!-- HERO -->
   <section class="hero">
-    <p class="hero-badge">We're Getting Married</p>
+    <p class="hero-badge" data-i18n="wereMarrying">We're Getting Married</p>
     <div class="hero-names">
       <span class="name">Raghad</span>
       <span class="hero-and">and</span>
       <span class="name">Mohamed</span>
     </div>
-    <p class="hero-date-lbl">26 September 2026 · Helnan Palace Montaza</p>
+    <p class="hero-date-lbl" data-i18n="heroDate">26 September 2026 · Helnan Palace Montaza</p>
     <div class="hero-cta" onclick="scrollTo('s-cd')">
-      <span>Confirm your attendance</span>
+      <span data-i18n="confirmCta">Confirm your attendance</span>
       <div class="cta-line"></div>
     </div>
   </section>
 
   <!-- COUNTDOWN -->
   <section class="s-cd" id="s-cd">
-    <span class="sec-label">To the big day</span>
-    <h2 class="sec-title">Countdown</h2>
+    <span class="sec-label" data-i18n="cdLabel">To the big day</span>
+    <h2 class="sec-title" data-i18n="cdTitle">Countdown</h2>
     <div class="gold-div"><div class="gold-div-line"></div><span class="gold-div-gem">✦</span><div class="gold-div-line"></div></div>
     <div class="cd-wrap">
-      <div class="cd-box"><span class="cd-num" id="cd-d">00</span><span class="cd-lbl">Days</span></div>
-      <div class="cd-box"><span class="cd-num" id="cd-h">00</span><span class="cd-lbl">Hours</span></div>
-      <div class="cd-box"><span class="cd-num" id="cd-m">00</span><span class="cd-lbl">Minutes</span></div>
-      <div class="cd-box"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl">Seconds</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-d">00</span><span class="cd-lbl" data-i18n="cdDays">Days</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-h">00</span><span class="cd-lbl" data-i18n="cdHours">Hours</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-m">00</span><span class="cd-lbl" data-i18n="cdMins">Minutes</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl" data-i18n="cdSecs">Seconds</span></div>
     </div>
   </section>
 
@@ -625,44 +672,45 @@
           allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         <div>
           <a href="https://maps.google.com/?q=Helnan+Palestine+Hotel+Montaza+Alexandria+Egypt" target="_blank" class="act-btn">Open in Maps</a>
-          <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ASUMMARY:Raghad%20%26%20Mohamed%20Wedding%0ADTSTART:20260926T160000Z%0ADTEND:20260926T230000Z%0ALOCATION:Helnan%20Palace%20Montaza%2C%20Alexandria%2C%20Egypt%0AEND:VEVENT%0AEND:VCALENDAR" download="Raghad_Mohamed_Wedding.ics" class="act-btn">Add to Calendar</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RSVP -->
-  <section class="s-rsvp" id="s-rsvp">
-    <span class="sec-label">We hope to count on you</span>
-    <h2 class="sec-title">Confirm Your Attendance</h2>
+          <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AV  <section class="s-rsvp" id="s-rsvp">
+    <span class="sec-label" data-i18n="rsvpLabel">We hope to count on you</span>
+    <h2 class="sec-title" data-i18n="rsvpTitle">Confirm Your Attendance</h2>
     <div class="gold-div"><div class="gold-div-line"></div><span class="gold-div-gem">✦</span><div class="gold-div-line"></div></div>
 
     <div class="rsvp-card" id="rsvp-wrap">
       <form id="rsvp-form" onsubmit="submitRSVP(event)">
         <div class="fg">
-          <label for="rsvp-name">Full Name *</label>
-          <input type="text" id="rsvp-name" placeholder="Your Name" required/>
+          <label for="rsvp-name" data-i18n="nameLabel">Full Name *</label>
+          <input type="text" id="rsvp-name" data-i18n-ph="namePh" placeholder="Your Name" required/>
         </div>
         <div class="fg">
-          <label>Will You Attend? *</label>
+          <label data-i18n="attendLabel">Will You Attend? *</label>
           <div class="att-row">
-            <button type="button" class="att-btn active" id="btn-yes" onclick="setAttend('yes')">Yes, I'll be there</button>
-            <button type="button" class="att-btn" id="btn-no"  onclick="setAttend('no')">No, I can't make it</button>
+            <button type="button" class="att-btn active" id="btn-yes" onclick="setAttend('yes')" data-i18n="btnYes">Yes, I'll be there</button>
+            <button type="button" class="att-btn" id="btn-no"  onclick="setAttend('no')" data-i18n="btnNo">No, I can't make it</button>
           </div>
           <input type="hidden" id="rsvp-attend" value="yes"/>
         </div>
         <div class="fg">
-          <label for="rsvp-msg">Message for the Couple</label>
-          <textarea id="rsvp-msg" placeholder="Write a warm message..."></textarea>
+          <label for="rsvp-msg" data-i18n="msgLabel">Message for the Couple</label>
+          <textarea id="rsvp-msg" data-i18n-ph="msgPh" placeholder="Write a warm message..."></textarea>
         </div>
         <div class="fg">
-          <label>Signature</label>
+          <label data-i18n="sigLabel">Signature</label>
           <div class="sig-wrap">
             <canvas id="sig-canvas" width="600" height="110"></canvas>
-            <button type="button" class="sig-clr" onclick="clearSig()">Clear</button>
+            <button type="button" class="sig-clr" onclick="clearSig()" data-i18n="sigClear">Clear</button>
           </div>
         </div>
-        <button type="submit" class="sub-btn" id="sub-btn">Send Confirmation</button>
+        <button type="submit" class="sub-btn" id="sub-btn" data-i18n="sendBtn">Send Confirmation</button>
+      </form>
+      <div class="success-msg" id="success-msg">
+        <div class="success-emoji">💌</div>
+        <h3 data-i18n="successTitle">Thank You!</h3>
+        <p data-i18n="successBody">Your confirmation has been received.<br>We can't wait to celebrate with you at Helnan Palace!</p>
+      </div>
+    </div>
+  </section>   <button type="submit" class="sub-btn" id="sub-btn">Send Confirmation</button>
       </form>
       <div class="success-msg" id="success-msg">
         <div class="success-emoji">💌</div>
@@ -674,8 +722,8 @@
 
   <!-- GUEST WALL -->
   <section class="s-wall">
-    <span class="sec-label">With love from our guests</span>
-    <h2 class="sec-title">Congratulations</h2>
+    <span class="sec-label" data-i18n="wallLabel">With love from our guests</span>
+    <h2 class="sec-title" data-i18n="wallTitle">Congratulations</h2>
     <div class="gold-div"><div class="gold-div-line"></div><span class="gold-div-gem">✦</span><div class="gold-div-line"></div></div>
     <div class="msgs" id="msgs">
       <div class="msg-card">
@@ -698,12 +746,95 @@
     <p class="f-mono">R &nbsp;|&nbsp; M</p>
     <p class="f-names">Raghad &amp; Mohamed</p>
     <p class="f-date">26 SEPTEMBER 2026 · HELNAN PALACE MONTAZA</p>
-    <p class="f-love">With all our love</p>
+    <p class="f-love" data-i18n="footerLove">With all our love</p>
     <p class="f-gem">✦</p>
   </footer>
 </div>
 
 <script>
+  // ══ TRANSLATIONS ══
+  const TRANSLATIONS = {
+    en: {
+      dear:'Dear', guest:'Guest', invited:"You're invited ✦", tapOpen:'tap to open',
+      wereMarrying:"We're Getting Married",
+      heroDate:'26 September 2026 · Helnan Palace Montaza',
+      confirmCta:'Confirm your attendance',
+      cdLabel:'To the big day', cdTitle:'Countdown',
+      cdDays:'Days', cdHours:'Hours', cdMins:'Minutes', cdSecs:'Seconds',
+      detLabel:'Everything you need to know', detTitle:'Day Details',
+      dateCardTitle:'Date & Time',
+      dateCardBody:'Saturday, 26 September 2026<br>Doors open at 6:00 PM<br>Celebration begins at 7:00 PM',
+      venueCardTitle:'Venue',
+      venueCardBody:'Helnan Palestine Palace Hotel<br>Montaza, Alexandria, Egypt',
+      openMaps:'Open in Maps', addCal:'Add to Calendar',
+      rsvpLabel:'We hope to count on you', rsvpTitle:'Confirm Your Attendance',
+      nameLabel:'Full Name *', namePh:'Your Name',
+      attendLabel:'Will You Attend? *',
+      btnYes:"Yes, I'll be there", btnNo:"No, I can't make it",
+      msgLabel:'Message for the Couple', msgPh:'Write a warm message...',
+      sigLabel:'Signature', sigClear:'Clear',
+      sendBtn:'Send Confirmation',
+      successTitle:'Thank You!',
+      successBody:"Your confirmation has been received.<br>We can't wait to celebrate with you at Helnan Palace!",
+      wallLabel:'With love from our guests', wallTitle:'Congratulations',
+      footerLove:'With all our love'
+    },
+    ar: {
+      dear:'عزيزي', guest:'ضيفنا', invited:'أنت مدعو ✦', tapOpen:'اضغط للفتح',
+      wereMarrying:'نعلن زواجنا',
+      heroDate:'٢٦ سبتمبر ٢٠٢٦ · قصر هلنان مونتازا',
+      confirmCta:'تأكيد حضورك',
+      cdLabel:'حتى يوم الفرح', cdTitle:'العد التنازلي',
+      cdDays:'أيام', cdHours:'ساعات', cdMins:'دقائق', cdSecs:'ثواني',
+      detLabel:'كل ما تحتاج معرفته', detTitle:'تفاصيل اليوم',
+      dateCardTitle:'التاريخ والوقت',
+      dateCardBody:'السبت، ٢٦ سبتمبر ٢٠٢٦<br>الأبواب تفتح الساعة ٦:٠٠ مساءً<br>الاحتفال يبدأ الساعة ٧:٠٠ مساءً',
+      venueCardTitle:'المكان',
+      venueCardBody:'فندق هلنان بالاس<br>مونتازا، الإسكندرية، مصر',
+      openMaps:'افتح في الخرائط', addCal:'أضف للتقويم',
+      rsvpLabel:'نأمل في حضوركم', rsvpTitle:'تأكيد الحضور',
+      nameLabel:'الاسم الكامل *', namePh:'اسمك',
+      attendLabel:'هل ستحضر؟ *',
+      btnYes:'نعم، سأكون هناك', btnNo:'لا، لن أتمكن من الحضور',
+      msgLabel:'رسالة للعروسين', msgPh:'اكتب رسالة دافئة...',
+      sigLabel:'التوقيع', sigClear:'مسح',
+      sendBtn:'إرسال التأكيد',
+      successTitle:'شكراً لك!',
+      successBody:'تم استلام تأكيدك.<br>لا يسعنا الانتظار للاحتفال معك في هلنان بالاس!',
+      wallLabel:'بمحبة من ضيوفنا', wallTitle:'التهاني',
+      footerLove:'بكل محبتنا'
+    }
+  };
+
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    const T = TRANSLATIONS[lang];
+    const isAr = lang === 'ar';
+
+    // Toggle button state
+    document.getElementById('btn-en').classList.toggle('active', !isAr);
+    document.getElementById('btn-ar').classList.toggle('active', isAr);
+
+    // RTL / LTR
+    document.body.classList.toggle('rtl', isAr);
+    document.documentElement.lang = lang;
+
+    // Update all data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (T[key] !== undefined) el.innerHTML = T[key];
+    });
+    // Update placeholder-only elements
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+      const key = el.dataset.i18nPh;
+      if (T[key] !== undefined) el.placeholder = T[key];
+    });
+
+    localStorage.setItem('wedding_lang', lang);
+  }
+
   // PETALS
   const ROSE_PETALS = ['&#127800;','&#127801;','&#127802;','&#128144;','&#127799;'];
   function spawnPetal() {
@@ -736,6 +867,7 @@
         screen.classList.add('hidden');
         const mc = document.getElementById('main-content');
         mc.classList.add('visible');
+        updateToggleStyle();
         startCountdown();
         for(let i=0;i<5;i++) spawnPetal();
       }, 700);
@@ -824,11 +956,22 @@
 
   function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  // Load saved RSVPs on page load
+  // Load saved RSVPs and restore language on page load
   window.addEventListener('load', ()=>{
+    // Restore language
+    const savedLang = localStorage.getItem('wedding_lang') || 'en';
+    if (savedLang !== 'en') setLang(savedLang);
+
+    // Load RSVP messages
     const saved = JSON.parse(localStorage.getItem('rm_rsvps')||'[]');
     saved.slice().reverse().forEach(r=>{ if(r.msg) addCard(r.name, r.msg, r.date); });
   });
+
+  // Switch lang-toggle style when main content opens
+  function updateToggleStyle() {
+    const onMain = document.getElementById('main-content').classList.contains('visible');
+    document.getElementById('lang-toggle').classList.toggle('on-main', onMain);
+  }
 </script>
 </body>
 </html>
