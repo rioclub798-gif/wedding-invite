@@ -825,11 +825,11 @@
         <h3 data-i18n="venueCardTitle">Venue</h3>
         <p data-i18n="venueCardBody">Montaza Palace, El-Gaish Rd<br>Al Mandarah Bahri, Montaza 2<br>Alexandria Governorate 21539, Egypt</p>
         <iframe class="map-frame"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3411.8!2d30.022!3d31.281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f5c5b4e58e0001%3A0x1!2sMontaza+Palace%2C+El-Gaish+Rd%2C+Al+Mandarah+Bahri%2C+Montaza+2%2C+Alexandria+Governorate+21539%2C+Egypt!5e0!3m2!1sen!2s!4v1699999999999"
+          src="https://maps.google.com/maps?q=Montaza%20Palace%2C%20El-Gaish%20Rd%2C%20Al%20Mandarah%20Bahri%2C%20Montaza%202%2C%20Alexandria%20Governorate%2021539%2C%20Egypt&t=&z=15&ie=UTF8&iwloc=&output=embed"
           allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         <div>
           <a href="https://maps.app.goo.gl/L3sGkYZN4jQ7fEMc9" target="_blank" class="act-btn" data-i18n="openMaps">Open in Maps</a>
-          <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ASUMMARY:Raghad%20%26%20Mohamed%20Wedding%0ADTSTART:20260926T160000Z%0ADTEND:20260926T230000Z%0ALOCATION:Montaza%20Palace%2C%20El-Gaish%20Rd%2C%20Al%20Mandarah%20Bahri%2C%20Montaza%202%2C%20Alexandria%20Governorate%2021539%2C%20Egypt%0AEND:VEVENT%0AEND:VCALENDAR" download="Raghad_Mohamed_Wedding.ics" class="act-btn" data-i18n="addCal">Add to Calendar</a>
+          <button type="button" onclick="addToCalendar(event)" class="act-btn" data-i18n="addCal">Add to Calendar</button>
         </div>
       </div>
     </div>
@@ -957,6 +957,36 @@
   // SCROLL
   function scrollTo(id) {
     document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  }
+
+  // ADD TO CALENDAR (BLOB ICS DOWNLOAD)
+  function addToCalendar(e) {
+    if(e) e.preventDefault();
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Raghad and Mohamed Wedding//EN',
+      'BEGIN:VEVENT',
+      'SUMMARY:Raghad & Mohamed Wedding',
+      'DESCRIPTION:You are cordially invited to celebrate the wedding of Raghad and Mohamed at Montaza Palace!',
+      'LOCATION:Montaza Palace, El-Gaish Rd, Al Mandarah Bahri, Montaza 2, Alexandria Governorate 21539, Egypt',
+      'DTSTART:20260926T160000Z',
+      'DTEND:20260926T230000Z',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Raghad_Mohamed_Wedding.ics';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 200);
   }
 
   // COUNTDOWN to Sep 26, 2026 18:00
