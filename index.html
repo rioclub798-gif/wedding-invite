@@ -31,7 +31,7 @@
       --blush:   #f5ebe0;
     }
     html { scroll-behavior: smooth; }
-    body { background: var(--cream); color: var(--text); font-family: 'Lato', sans-serif; overflow-x: hidden; }
+    body { background: var(--cream); color: var(--text); font-family: 'Lato', sans-serif; overflow-x: clip; }
 
     /* ══════════════════════════════════════
        ENVELOPE INTRO SCREEN
@@ -476,47 +476,35 @@
     .gold-div { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 14px auto 48px; max-width: 180px; }
 
     /* ══════════════════════════════════════
-       MODERN CSS SCROLL-DRIVEN ANIMATIONS
+       MODERN SCROLL-DRIVEN OPACITY ANIMATIONS
     ══════════════════════════════════════ */
-    @keyframes scrollFadeIn {
-      from {
-        opacity: 0.12;
-        transform: translateY(32px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .s-blessing,
+    .s-cd,
+    .s-det,
+    footer {
+      opacity: 0.1;
+      transform: translateY(32px);
+      will-change: opacity, transform;
     }
 
-    /* Native CSS Scroll-driven animations using animation-timeline: view() */
     @supports (animation-timeline: view()) {
       .s-blessing,
       .s-cd,
       .s-det,
       footer {
-        animation: scrollFadeIn linear both;
+        animation: scrollOpacityFade linear both;
         animation-timeline: view();
-        animation-range: entry 10% cover 40%;
+        animation-range: entry 0% cover 45%;
       }
-    }
-
-    /* Progressive enhancement fallback */
-    @supports not (animation-timeline: view()) {
-      .s-blessing,
-      .s-cd,
-      .s-det,
-      footer {
-        opacity: 0.2;
-        transform: translateY(28px);
-        transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-      .s-blessing.revealed,
-      .s-cd.revealed,
-      .s-det.revealed,
-      footer.revealed {
-        opacity: 1;
-        transform: translateY(0);
+      @keyframes scrollOpacityFade {
+        from {
+          opacity: 0.1;
+          transform: translateY(36px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     }
     /* QURAN & BLESSING SECTION */
@@ -1060,20 +1048,33 @@
     const savedLang = localStorage.getItem('wedding_lang') || 'en';
     setLang(savedLang);
 
-    // Fallback IntersectionObserver for browsers without native animation-timeline support
-    if (!CSS.supports || !CSS.supports('animation-timeline', 'view()')) {
-      const observer = new IntersectionObserver((entries)=>{
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('revealed');
-        });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.s-blessing, .s-cd, .s-det, footer').forEach(el => observer.observe(el));
-    }
+    // Initial calculation for scroll opacity
+    updateScrollOpacity();
 
     // Load RSVP messages
     const saved = JSON.parse(localStorage.getItem('rm_rsvps')||'[]');
     saved.slice().reverse().forEach(r=>{ if(r.msg) addCard(r.name, r.msg, r.date); });
   });
+
+  // Continuous Scroll-Driven Opacity Engine
+  function updateScrollOpacity() {
+    const elements = document.querySelectorAll('.s-blessing, .s-cd, .s-det, footer');
+    const vh = window.innerHeight;
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const startPoint = vh * 0.95;
+      const endPoint   = vh * 0.32;
+      let opacity = (startPoint - rect.top) / (startPoint - endPoint);
+      opacity = Math.max(0.1, Math.min(1.0, opacity));
+      let translateY = Math.max(0, (1 - opacity) * 36);
+
+      el.style.opacity = opacity.toFixed(3);
+      el.style.transform = `translateY(${translateY.toFixed(1)}px)`;
+    });
+  }
+
+  window.addEventListener('scroll', updateScrollOpacity, { passive: true });
+  window.addEventListener('resize', updateScrollOpacity, { passive: true });
 
   // Switch lang-toggle style when main content opens
   function updateToggleStyle() {
