@@ -474,6 +474,51 @@
     .sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(38px,8.5vw,56px); font-weight: 400; text-align: center; color: var(--dark); }
     body.rtl .sec-title { font-family: 'Amiri', serif; font-weight: 700; }
     .gold-div { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 14px auto 48px; max-width: 180px; }
+
+    /* ══════════════════════════════════════
+       MODERN CSS SCROLL-DRIVEN ANIMATIONS
+    ══════════════════════════════════════ */
+    @keyframes scrollFadeIn {
+      from {
+        opacity: 0.12;
+        transform: translateY(32px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Native CSS Scroll-driven animations using animation-timeline: view() */
+    @supports (animation-timeline: view()) {
+      .s-blessing,
+      .s-cd,
+      .s-det,
+      footer {
+        animation: scrollFadeIn linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 40%;
+      }
+    }
+
+    /* Progressive enhancement fallback */
+    @supports not (animation-timeline: view()) {
+      .s-blessing,
+      .s-cd,
+      .s-det,
+      footer {
+        opacity: 0.2;
+        transform: translateY(28px);
+        transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .s-blessing.revealed,
+      .s-cd.revealed,
+      .s-det.revealed,
+      footer.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
     /* QURAN & BLESSING SECTION */
     .s-blessing {
       background: var(--cream);
@@ -1014,6 +1059,16 @@
     // Apply default language (EN default)
     const savedLang = localStorage.getItem('wedding_lang') || 'en';
     setLang(savedLang);
+
+    // Fallback IntersectionObserver for browsers without native animation-timeline support
+    if (!CSS.supports || !CSS.supports('animation-timeline', 'view()')) {
+      const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('revealed');
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.s-blessing, .s-cd, .s-det, footer').forEach(el => observer.observe(el));
+    }
 
     // Load RSVP messages
     const saved = JSON.parse(localStorage.getItem('rm_rsvps')||'[]');
