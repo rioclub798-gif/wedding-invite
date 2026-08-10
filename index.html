@@ -417,12 +417,20 @@
     /* HERO */
     .hero {
       min-height: 100svh;
-      background:
-        linear-gradient(180deg, rgba(20,15,10,0.42) 0%, rgba(10,8,4,0.75) 100%),
-        url('helnan-palace.jpg') center/cover no-repeat;
+      position: relative;
+      overflow: hidden;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 90px 24px 70px; position: relative;
+      text-align: center; padding: 90px 24px 70px;
     }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        linear-gradient(180deg, rgba(20,15,10,0.48) 0%, rgba(10,8,4,0.78) 100%),
+        url('helnan-palace.jpg') center/cover no-repeat;
+      opacity: 0.9;
+    }
+    .hero > * { position: relative; z-index: 1; }
     .hero-badge { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold-l); margin-bottom: 22px; text-shadow: 0 2px 8px rgba(0,0,0,0.6); animation: fadeInDown 1s ease 0.2s both; }
     body.rtl .hero-badge { font-family: 'Aref Ruqaa', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 1px; }
     .hero-names { display: flex; flex-direction: column; align-items: center; animation: fadeInDown 1s ease 0.4s both; }
@@ -734,7 +742,7 @@
     </div>
     <p class="hero-date-lbl" data-i18n="heroDate">26 September 2026 · Helnan Palace Montaza</p>
     <div class="hero-cta" onclick="scrollTo('s-cd')">
-      <span data-i18n="confirmCta">Confirm your attendance</span>
+      <span data-i18n="seeDetails">See Details</span>
       <div class="cta-line"></div>
     </div>
   </section>
@@ -795,47 +803,6 @@
     </div>
   </section>
 
-  <!-- RSVP -->
-  <section class="s-rsvp" id="s-rsvp">
-    <span class="sec-label" data-i18n="rsvpLabel">We hope to count on you</span>
-    <h2 class="sec-title" data-i18n="rsvpTitle">Confirm Your Attendance</h2>
-    <div class="gold-div"><div class="gold-div-line"></div><span class="gold-div-gem">✦</span><div class="gold-div-line"></div></div>
-
-    <div class="rsvp-card" id="rsvp-wrap">
-      <form id="rsvp-form" onsubmit="submitRSVP(event)">
-        <div class="fg">
-          <label for="rsvp-name" data-i18n="nameLabel">Full Name *</label>
-          <input type="text" id="rsvp-name" data-i18n-ph="namePh" placeholder="Your Name" required/>
-        </div>
-        <div class="fg">
-          <label data-i18n="attendLabel">Will You Attend? *</label>
-          <div class="att-row">
-            <button type="button" class="att-btn active" id="btn-yes" onclick="setAttend('yes')" data-i18n="btnYes">Yes, I'll be there</button>
-            <button type="button" class="att-btn" id="btn-no"  onclick="setAttend('no')" data-i18n="btnNo">No, I can't make it</button>
-          </div>
-          <input type="hidden" id="rsvp-attend" value="yes"/>
-        </div>
-        <div class="fg">
-          <label for="rsvp-msg" data-i18n="msgLabel">Message for the Couple</label>
-          <textarea id="rsvp-msg" data-i18n-ph="msgPh" placeholder="Write a warm message..."></textarea>
-        </div>
-        <div class="fg">
-          <label data-i18n="sigLabel">Signature</label>
-          <div class="sig-wrap">
-            <canvas id="sig-canvas" width="600" height="110"></canvas>
-            <button type="button" class="sig-clr" onclick="clearSig()" data-i18n="sigClear">Clear</button>
-          </div>
-        </div>
-        <button type="submit" class="sub-btn" id="sub-btn" data-i18n="sendBtn">Send Confirmation</button>
-      </form>
-      <div class="success-msg" id="success-msg">
-        <div class="success-emoji">💌</div>
-        <h3 data-i18n="successTitle">Thank You!</h3>
-        <p data-i18n="successBody">Your confirmation has been received.<br>We can't wait to celebrate with you at Helnan Palace!</p>
-      </div>
-    </div>
-  </section>
-
   <!-- FOOTER -->
   <footer>
     <p class="f-mono">R &nbsp;|&nbsp; M</p>
@@ -854,7 +821,7 @@
       wereMarrying:"We're Getting Married",
       name1:'Raghad', and:'and', name2:'Mohamed', coupleNames:'Raghad & Mohamed',
       heroDate:'26 September 2026 · Helnan Palace Montaza',
-      confirmCta:'Confirm your attendance',
+      seeDetails:'See Details',
       cdLabel:'To the big day', cdTitle:'Countdown',
       cdDays:'Days', cdHours:'Hours', cdMins:'Minutes', cdSecs:'Seconds',
       detLabel:'Everything you need to know', detTitle:'Day Details',
@@ -863,15 +830,6 @@
       venueCardTitle:'Venue',
       venueCardBody:'Helnan Palestine Palace Hotel<br>Montaza, Alexandria, Egypt',
       openMaps:'Open in Maps', addCal:'Add to Calendar',
-      rsvpLabel:'We hope to count on you', rsvpTitle:'Confirm Your Attendance',
-      nameLabel:'Full Name *', namePh:'Your Name',
-      attendLabel:'Will You Attend? *',
-      btnYes:"Yes, I'll be there", btnNo:"No, I can't make it",
-      msgLabel:'Message for the Couple', msgPh:'Write a warm message...',
-      sigLabel:'Signature', sigClear:'Clear',
-      sendBtn:'Send Confirmation',
-      successTitle:'Thank You!',
-      successBody:"Your confirmation has been received.<br>We can't wait to celebrate with you at Helnan Palace!",
       footerDate:'26 SEPTEMBER 2026 · HELNAN PALACE MONTAZA',
       footerLove:'With all our love'
     },
@@ -880,7 +838,7 @@
       wereMarrying:'نعلن زواجنا',
       name1:'رغد', and:'و', name2:'محمد', coupleNames:'رغد و محمد',
       heroDate:'٢٦ سبتمبر ٢٠٢٦ · قصر هلنان مونتازا',
-      confirmCta:'تأكيد حضورك',
+      seeDetails:'تفاصيل الفرح',
       cdLabel:'حتى يوم الفرح', cdTitle:'العد التنازلي',
       cdDays:'أيام', cdHours:'ساعات', cdMins:'دقائق', cdSecs:'ثواني',
       detLabel:'كل ما تحتاج معرفته', detTitle:'تفاصيل اليوم',
@@ -889,15 +847,6 @@
       venueCardTitle:'المكان',
       venueCardBody:'فندق هلنان بالاس<br>مونتازا، الإسكندرية، مصر',
       openMaps:'افتح في الخرائط', addCal:'أضف للتقويم',
-      rsvpLabel:'نأمل في حضوركم', rsvpTitle:'تأكيد الحضور',
-      nameLabel:'الاسم الكامل *', namePh:'اسمك',
-      attendLabel:'هل ستحضر؟ *',
-      btnYes:'نعم، سأكون هناك', btnNo:'لا، لن أتمكن من الحضور',
-      msgLabel:'رسالة للعروسين', msgPh:'اكتب رسالة دافئة...',
-      sigLabel:'التوقيع', sigClear:'مسح',
-      sendBtn:'إرسال التأكيد',
-      successTitle:'شكراً لك!',
-      successBody:'تم استلام تأكيدك.<br>لا يسعنا الانتظار للاحتفال معك في هلنان بالاس!',
       footerDate:'٢٦ سبتمبر ٢٠٢٦ · قصر هلنان مونتازا',
       footerLove:'بكل محبتنا'
     }
