@@ -211,42 +211,38 @@
     }
     .env-outer.open .env-hint { opacity: 0; }
 
-    /* Language toggle */
+    /* Language toggle — luxury glass pill */
     #lang-toggle {
       position: fixed; top: 18px; right: 18px; z-index: 2000;
       display: flex; align-items: center; gap: 0;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(247,242,234,0.92);
+      border: 1.5px solid rgba(184,147,90,0.45);
       border-radius: 100px;
       overflow: hidden;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-      animation: envFadeIn 1s ease 1.5s both;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 18px rgba(58,45,30,0.14);
+      animation: envFadeIn 1s ease 1s both;
     }
     .lang-btn {
-      padding: 7px 14px;
+      padding: 8px 16px;
       font-family: 'Cinzel', serif;
-      font-size: 11px; letter-spacing: 1px;
-      color: rgba(255,255,255,0.5);
+      font-size: 11px; letter-spacing: 1.5px; font-weight: 600;
+      color: var(--dark);
       background: none; border: none;
       cursor: pointer;
       transition: all 0.3s ease;
     }
+    body.rtl .lang-btn { font-family: 'Aref Ruqaa', sans-serif; font-size: 13px; letter-spacing: 0; }
     .lang-btn.active {
-      background: rgba(184,147,90,0.8);
-      color: white;
+      background: var(--gold-d);
+      color: var(--cream);
+      box-shadow: 0 2px 8px rgba(138,106,56,0.35);
     }
-    body:not(#invite-screen) #lang-toggle {
-      border-color: rgba(184,147,90,0.3);
-      background: rgba(247,242,234,0.9);
+    .lang-btn:hover:not(.active) {
+      color: var(--gold-d);
+      background: rgba(184,147,90,0.12);
     }
-    #lang-toggle.on-main {
-      background: rgba(247,242,234,0.95);
-      border-color: rgba(184,147,90,0.35);
-      box-shadow: 0 4px 16px rgba(58,45,30,0.1);
-    }
-    #lang-toggle.on-main .lang-btn { color: var(--text); }
-    #lang-toggle.on-main .lang-btn.active { background: var(--gold-d); color: var(--cream); }
 
     /* RTL support */
     body.rtl { direction: rtl; text-align: right; }
